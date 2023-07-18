@@ -15,6 +15,9 @@ import Main from "./pages/Main";
 import TestPage from "./pages/TestPage";
 import ErrorPage from "./pages/ErrorPage";
 import SelectPlayer from "./pages/SelectPlayer";
+import SelectMode from "./pages/SelectMode";
+import PlayGame from "./pages/PlayGame";
+import SetupSinglePlay from "./pages/SetupSinglePlay";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,9 +25,11 @@ const router = createBrowserRouter(
       <Route path="/" element={<App />} errorElement={<ErrorPage />}>
         <Route path="/main" element={<Main />}>
           <Route path="/main" element={<SelectPlayer />} />
-          <Route path="/main/singlePlay" element={<SelectPlayer />} />
-          <Route path="/main/multiPlay" element={<SelectPlayer />} />
+          <Route path="/main/singlePlay" element={<SelectMode />} />
+          <Route path="/main/multiPlay" element={<SelectMode />} />
         </Route>
+        <Route path="/setupSinglePlay" element={<SetupSinglePlay />} />
+        <Route path="/game" element={<PlayGame />} />
       </Route>
       <Route path="test" element={<TestPage />} />
     </>

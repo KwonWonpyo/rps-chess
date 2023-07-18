@@ -21,3 +21,51 @@
     transform: rotate(360deg);
   }
 }
+
+.rock-icon::after {
+  content: "";
+  display: block;
+  width: 41px;
+  height: 43px;
+  background: url(./resource/rock-paper-scissors.png);
+  transform: scale(0.9);
+}
+.scissors-icon::after {
+  content: "";
+  display: block;
+  width: 42px;
+  height: 63px;
+  background: url(./resource/rock-paper-scissors.png) 40px 64px;
+  transform: scale(0.8);
+}
+.paper-icon::after {
+  content: "";
+  display: block;
+  width: 48px;
+  height: 65px;
+  background: url(./resource/rock-paper-scissors.png) 88px 96px;
+  transform: scale(0.8);
+}
+.unknown-icon::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 64px;
+  background: url(./resource/question-mark.png) 0px 0px;
+  transform: scale(0.8);
+}
+
+@media (min-width: 768px) {
+  .rock-icon::after {
+    transform: scale(1.2);
+  }
+  .scissors-icon::after {
+    transform: scale(1.1);
+  }
+  .paper-icon::after {
+    transform: scale(1.2);
+  }
+  .unknown-icon::after {
+    transform: scale(1.2);
+  }
+}

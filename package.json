@@ -1,5 +1,6 @@
 {
   "name": "rps-chess",
+  "homepage": "/main",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -36,7 +37,9 @@
     ]
   },
   "devDependencies": {
+    "classnames": "^2.3.2",
     "mobx": "^6.9.0",
+    "mobx-react-lite": "^3.4.3",
     "prettier": "^2.8.8",
     "prettier-eslint": "^15.0.1",
     "prettier-plugin-tailwindcss": "^0.3.0",

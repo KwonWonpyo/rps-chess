@@ -1,5 +1,5 @@
-import OnePlayer from "../one_player.svg";
-import TwoPlayer from "../two_players_ver2.svg";
+import OnePlayer from "../resource/one_player.svg";
+import TwoPlayer from "../resource/two_players_ver2.svg";
 import ButtonSquare1 from "../components/buttons/ButtonSquare1";
 import { Link } from "react-router-dom";
 
@@ -20,6 +20,14 @@ function SelectPlayer() {
           alt={"two players"}
         />
       </Link>
+      <a
+        className="App-link"
+        href="https://reactjs.org"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Learn React
+      </a>
     </>
   );
 }
