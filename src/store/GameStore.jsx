@@ -1,34 +1,44 @@
 import { action, makeObservable, observable } from "mobx";
 
 class GameStore {
-  num_of_players;
+  mode;
+  team_single;
   row = 5;
   col = 5;
   field;
   xIsNext = true;
-  numScissors = 0;
-  numRocks = 0;
-  numPapers = 0;
+  scoreBoard;
   selectedPawn;
   highlights = [];
   stage;
+  hoverPreview = true;
 
   constructor() {
     this.field = Array.from(Array(this.row), () =>
-      Array(this.col).fill("undefined")
+      Array(this.col).fill(undefined)
     );
     this.xIsNext = false;
     this.selectedPawn = undefined;
+    this.scoreBoard = {
+      teamScissors: {
+        scissors: 0,
+        rocks: 0,
+      },
+      teamPapers: {
+        papers: 0,
+        rocks: 0,
+      },
+    };
+    this.stage = "";
 
     makeObservable(this, {
       field: observable,
       initField: action,
       updateField: action,
       xIsNext: observable,
-      numScissors: observable,
-      numRocks: observable,
-      numPapers: observable,
-      updateNumbers: action,
+      scoreBoard: observable,
+      updateScore: action,
+      stage: observable,
       selectedPawn: observable,
       SelectPawn: action,
     });
@@ -36,33 +46,39 @@ class GameStore {
 
   initField() {
     this.field = Array.from(Array(this.row), () =>
-      Array(this.col).fill("undefined")
+      Array(this.col).fill(undefined)
     );
-  }
-
-  setNumPlayers(num_of_players) {
-    this.num_of_players = num_of_players;
+    this.updateScore();
   }
 
   updateField(field) {
     this.field = field;
   }
 
-  updateNumbers() {
-    let scissors = 0;
-    let rocks = 0;
-    let papers = 0;
+  updateScore() {
+    this.scoreBoard = {
+      teamScissors: {
+        scissors: 0,
+        rocks: 0,
+      },
+      teamPapers: {
+        papers: 0,
+        rocks: 0,
+      },
+    };
     this.field.forEach((row) => {
       row.forEach((element) => {
-        if (element?.value === "SCISSORS") scissors++;
-        else if (element?.value === "ROCK") rocks++;
-        else if (element?.value === "PAPER") papers++;
+        if (element?.value === "SCISSORS")
+          this.scoreBoard.teamScissors.scissors++;
+        else if (element?.value === "PAPER")
+          this.scoreBoard.teamPapers.papers++;
+        else if (element?.value === "ROCK") {
+          if (element.team === "SCISSORS") this.scoreBoard.teamScissors.rocks++;
+          else if (element.team === "PAPER")
+            this.scoreBoard.teamScissors.rocks++;
+        }
       });
     });
-
-    this.numScissors = scissors;
-    this.numRocks = rocks;
-    this.numPapers = papers;
   }
 
   SelectPawn(pawn) {

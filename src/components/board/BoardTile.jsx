@@ -5,6 +5,7 @@ import { GameContext } from "../../store/Context";
 
 function BoardTile(props) {
   const game = useContext(GameContext);
+  const hoverPreview = game.hoverPreview;
   const { x, y, pawn } = props;
 
   let highlight = false;
@@ -15,7 +16,7 @@ function BoardTile(props) {
   let label = null;
   let teamColor = "bg-gray-300"; // default fallback
   if (pawn) {
-    label = pawn.isOpen ? pawn.value : "UNKNOWN";
+    label = pawn.value ?? "UNKNOWN";
     teamColor = pawn.team === "SCISSORS" ? "bg-red-500" : "bg-blue-500";
   }
   let pawnClass;
@@ -59,7 +60,24 @@ function BoardTile(props) {
               teamColor,
               pawnClass
             )}
-          />
+          >
+            {pawn?.isOpen === false && (
+              <div
+                className={classNames(
+                  "flex items-center justify-center",
+                  "m-auto h-14 w-14 md:h-20 md:w-20",
+                  "unknown-icon",
+                  "absolute z-10",
+                  "rounded-full",
+                  teamColor,
+                  {
+                    "hover:opacity-20 hover:transition-opacity":
+                      hoverPreview && game.team_single === pawn.team,
+                  }
+                )}
+              />
+            )}
+          </div>
           {props.moveHelper}
         </>
       )}

@@ -18,6 +18,8 @@ import SelectPlayer from "./pages/SelectPlayer";
 import SelectMode from "./pages/SelectMode";
 import PlayGame from "./pages/PlayGame";
 import SetupSinglePlay from "./pages/SetupSinglePlay";
+import SetupDuoPlay from "./pages/SetupDuoPlay";
+import { AlertModal } from "./components/buttons/BackToMain";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,10 +28,12 @@ const router = createBrowserRouter(
         <Route path="/main" element={<Main />}>
           <Route path="/main" element={<SelectPlayer />} />
           <Route path="/main/singlePlay" element={<SelectMode />} />
-          <Route path="/main/multiPlay" element={<SelectMode />} />
         </Route>
         <Route path="/setupSinglePlay" element={<SetupSinglePlay />} />
-        <Route path="/game" element={<PlayGame />} />
+        <Route path="/setupDuoPlay" element={<SetupDuoPlay />} />
+        <Route path="/game" element={<PlayGame />}>
+          <Route path="/game/backToMain" element={<AlertModal />} />
+        </Route>
       </Route>
       <Route path="test" element={<TestPage />} />
     </>

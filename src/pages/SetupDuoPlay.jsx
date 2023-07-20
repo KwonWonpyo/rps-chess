@@ -7,9 +7,8 @@ import GuideMessage from "../components/panel/GuideMessage";
 import StageTitle from "../components/panel/StageTitle";
 import { GameContext } from "../store/Context";
 import BackToLink from "../components/buttons/BackToLink";
-import PawnBase from "../components/pawn/PawnBase";
 
-function SetupSinglePlay() {
+function SetupDuoPlay() {
   const game = useContext(GameContext);
   const navigate = useNavigate();
 
@@ -30,11 +29,11 @@ function SetupSinglePlay() {
       break;
   }
 
-  const handleSetupSinglePlay = (x, y) => {
-    if (!(x === 3 || x === 4)) return;
+  const handleSetupDuoPlay = (x, y) => {
     const field = game.field;
 
     if (game.stage === "SETUP_SCISSORS") {
+      if (!(x === 3 || x === 4)) return;
       if (field[x][y].value === "SCISSORS") {
         field[x][y].value = "ROCK";
         game.updateField(field);
@@ -49,6 +48,7 @@ function SetupSinglePlay() {
         game.scoreBoard.teamScissors.scissors += 1;
       }
     } else if (game.stage === "SETUP_PAPER") {
+      if (!(x === 0 || x === 1)) return;
       if (field[x][y]?.value === "PAPER") {
         field[x][y].value = "ROCK";
         game.updateField(field);
@@ -65,27 +65,6 @@ function SetupSinglePlay() {
     }
   };
 
-  const placeAIOpponent = (team) => {
-    // 바위 배치
-    for (let m = 0; m < 2; m++) {
-      for (let n = 0; n < 5; n++) {
-        game.field[m][n] = new PawnBase("ROCK", false, team);
-      }
-    }
-
-    // 가위 또는 보자기를 랜덤 배치
-    const x1 = Math.floor(Math.random() * 1.9);
-    const y1 = Math.floor(Math.random() * 4.9);
-    let x2 = Math.floor(Math.random() * 1.9);
-    let y2 = Math.floor(Math.random() * 4.9);
-    game.field[x1][y1].value = team;
-    while (x1 === x2 && y1 === y2) {
-      x2 = Math.floor(Math.random() * 1.9);
-      y2 = Math.floor(Math.random() * 4.9);
-    }
-    game.field[x2][y2].value = team;
-  };
-
   const handleReady = () => {
     if (game.stage === "SETUP_SCISSORS") {
       if (game.scoreBoard.teamScissors.scissors !== 2) {
@@ -97,31 +76,36 @@ function SetupSinglePlay() {
         game.field[4].forEach((pawn) => {
           pawn.setOpen(false);
         });
-        game.mode = "SINGLE_PLAY";
+        game.mode = "DUO_PLAY";
         game.stage = "PLAY";
         game.highlights = [];
-        placeAIOpponent("PAPER");
         navigate("../game");
       }
     } else if (game.stage === "SETUP_PAPER") {
       if (game.scoreBoard.teamPapers.papers !== 2) {
         alert("보자기를 2개 배치해야 합니다.");
       } else {
-        game.field[3].forEach((pawn) => {
-          pawn.setOpen(false);
-        });
-        game.field[4].forEach((pawn) => {
-          pawn.setOpen(false);
-        });
-        game.mode = "SINGLE_PLAY";
-        game.stage = "PLAY";
         game.highlights = [];
-        placeAIOpponent("SCISSORS");
-        navigate("../game");
+        game.field[0].forEach((pawn) => {
+          pawn.setOpen(false);
+        });
+        game.field[1].forEach((pawn) => {
+          pawn.setOpen(false);
+        });
+        game.field[3].forEach((pawn, index) => {
+          pawn.setOpen(true);
+          game.highlights.push({ x: 3, y: index });
+        });
+        game.field[4].forEach((pawn, index) => {
+          pawn.setOpen(true);
+          game.highlights.push({ x: 4, y: index });
+        });
+        game.stage = "SETUP_SCISSORS";
       }
     }
   };
 
+  const title = game.stage === "SETUP_PAPER" ? "Player1 배치" : "Player2 배치";
   const message = (
     <span>
       노란색 칸을 선택하여 {pawnType}를 {pawnNumber}개 배치해주세요
@@ -129,13 +113,13 @@ function SetupSinglePlay() {
   );
   return (
     <>
-      <StageTitle title={"배치 단계"} />
+      <StageTitle title={title} />
       <GuideMessage message={message} />
-      <Board field={game.field} onClick={handleSetupSinglePlay} />
+      <Board field={game.field} onClick={handleSetupDuoPlay} />
       <ButtonSimple text={"준비 완료"} onClick={handleReady} />
-      <BackToLink backTo={"/main/singlePlay"} />
+      <BackToLink backTo={"/main"} />
     </>
   );
 }
 
-export default observer(SetupSinglePlay);
+export default observer(SetupDuoPlay);
