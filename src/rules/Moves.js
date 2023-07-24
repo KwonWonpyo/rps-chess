@@ -73,12 +73,7 @@ export function moveHelper(game, x, y) {
     canGo(game, thisPawn, x - 1, y - 1) &&
       canGoList.push(
         <div
-          className="help-position"
-          style={{
-            position: "absolute",
-            left: "-100px",
-            top: "-100px",
-          }}
+          className="absolute -left-16 -top-16 m-0 h-16 w-16 border border-gray-300 bg-cyan-500 opacity-30 md:-left-24 md:-top-24 md:h-24 md:w-24"
           onClick={() => {
             MovePawn(game, x, y, x - 1, y - 1);
           }}
@@ -89,11 +84,7 @@ export function moveHelper(game, x, y) {
     canGo(game, thisPawn, x - 1, y) &&
       canGoList.push(
         <div
-          className="help-position"
-          style={{
-            position: "absolute",
-            top: "-100px",
-          }}
+          className="absolute -top-16 m-0 h-16 w-16 border border-gray-300 bg-cyan-500 opacity-30 md:-top-24 md:h-24 md:w-24"
           onClick={() => {
             MovePawn(game, x, y, x - 1, y);
           }}
@@ -104,12 +95,7 @@ export function moveHelper(game, x, y) {
     canGo(game, thisPawn, x - 1, y + 1) &&
       canGoList.push(
         <div
-          className="help-position"
-          style={{
-            position: "absolute",
-            left: "100px",
-            top: "-100px",
-          }}
+          className="absolute -top-16 left-16 m-0 h-16 w-16 border border-gray-300 bg-cyan-500 opacity-30 md:-top-24 md:left-24 md:h-24 md:w-24"
           onClick={() => {
             MovePawn(game, x, y, x - 1, y + 1);
           }}
@@ -120,12 +106,7 @@ export function moveHelper(game, x, y) {
     canGo(game, thisPawn, x, y - 1) &&
       canGoList.push(
         <div
-          className="help-position"
-          style={{
-            position: "absolute",
-            top: "0px",
-            left: "-100px",
-          }}
+          className="absolute -left-16 m-0 h-16 w-16 border border-gray-300 bg-violet-500 opacity-80 md:-left-24 md:h-24 md:w-24"
           onClick={() => {
             MovePawn(game, x, y, x, y - 1);
           }}
@@ -136,12 +117,7 @@ export function moveHelper(game, x, y) {
     canGo(game, thisPawn, x, y + 1) &&
       canGoList.push(
         <div
-          className="help-position"
-          style={{
-            position: "absolute",
-            top: "0px",
-            left: "100px",
-          }}
+          className="absolute top-16 m-0 h-16 w-16 border border-gray-300 bg-amber-500 opacity-80 md:top-24 md:h-24 md:w-24"
           onClick={() => {
             MovePawn(game, x, y, x, y + 1);
           }}
@@ -152,12 +128,7 @@ export function moveHelper(game, x, y) {
     canGo(game, thisPawn, x + 1, y - 1) &&
       canGoList.push(
         <div
-          className="help-position"
-          style={{
-            position: "absolute",
-            left: "-100px",
-            top: "100px",
-          }}
+          className="absolute -left-16 top-16 m-0 h-16 w-16 border border-gray-300 bg-cyan-500 opacity-30 md:-left-24 md:top-24 md:h-24 md:w-24"
           onClick={() => {
             MovePawn(game, x, y, x + 1, y - 1);
           }}
@@ -168,11 +139,7 @@ export function moveHelper(game, x, y) {
     canGo(game, thisPawn, x + 1, y) &&
       canGoList.push(
         <div
-          className="help-position"
-          style={{
-            position: "absolute",
-            top: "100px",
-          }}
+          className="absolute top-16 m-0 h-16 w-16 border border-gray-300 bg-cyan-500 opacity-30 md:top-24 md:h-24 md:w-24"
           onClick={() => {
             MovePawn(game, x, y, x + 1, y);
           }}
@@ -183,12 +150,7 @@ export function moveHelper(game, x, y) {
     canGo(game, thisPawn, x + 1, y + 1) &&
       canGoList.push(
         <div
-          className="help-position"
-          style={{
-            position: "absolute",
-            left: "100px",
-            top: "100px",
-          }}
+          className="absolute left-16 top-16 z-10 m-0 h-16 w-16 border border-gray-300 bg-cyan-500 opacity-30 md:left-24 md:top-24 md:h-24 md:w-24"
           onClick={() => {
             MovePawn(game, x, y, x + 1, y + 1);
           }}

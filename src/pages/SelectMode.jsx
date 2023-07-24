@@ -27,22 +27,20 @@ function SelectMode() {
 
   return (
     <>
-      <div>어느 팀으로 플레이하시겠습니까?</div>
-      <div className="fles flex-col">
-        <Link to={"../../setupSinglePlay"}>
-          <ButtonSquare2
-            text={"가위팀"}
-            onClick={() => initSinglePlay("SETUP_SCISSORS", "SCISSORS")}
-          />
-        </Link>
-        <Link to={"../../setupSinglePlay"}>
-          <ButtonSquare2
-            text={"보자기팀"}
-            onClick={() => initSinglePlay("SETUP_PAPER", "PAPER")}
-          />
-        </Link>
-        <BackToLink backTo={"../"} />
-      </div>
+      {/* <div>어느 팀으로 플레이하시겠습니까?</div> */}
+      <Link to={"../../setupSinglePlay"}>
+        <ButtonSquare2
+          text={"가위팀"}
+          onClick={() => initSinglePlay("SETUP_SCISSORS", "SCISSORS")}
+        />
+      </Link>
+      <Link to={"../../setupSinglePlay"}>
+        <ButtonSquare2
+          text={"보자기팀"}
+          onClick={() => initSinglePlay("SETUP_PAPER", "PAPER")}
+        />
+      </Link>
+      <BackToLink backTo={"../"} />
     </>
   );
 }

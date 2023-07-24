@@ -39,8 +39,9 @@ class GameStore {
       scoreBoard: observable,
       updateScore: action,
       stage: observable,
+      changeStage: action,
       selectedPawn: observable,
-      SelectPawn: action,
+      selectPawn: action,
     });
   }
 
@@ -81,7 +82,11 @@ class GameStore {
     });
   }
 
-  SelectPawn(pawn) {
+  changeStage(nextStage) {
+    this.stage = nextStage;
+  }
+
+  selectPawn(pawn) {
     this.selectedPawn = pawn;
   }
 }

@@ -13,7 +13,7 @@ function Main() {
       <div className="mb-2 px-2 py-1 font-mono text-5xl font-extrabold">
         체스
       </div>
-      <div className="flex-row">
+      <div className="flex flex-col">
         <Outlet />
       </div>
     </>

@@ -11,6 +11,7 @@ function SelectPlayer() {
 
   const initDuoPlay = () => {
     game.initField();
+    game.highlights = [];
     game.stage = "SETUP_PAPER";
     game.team_single = undefined;
     game.hoverPreview = false;

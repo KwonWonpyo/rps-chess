@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { observer } from "mobx-react-lite";
 import classNames from "classnames";
 import { GameContext } from "../../store/Context";
+import { moveHelper } from "../../rules/Moves";
 
 function BoardTile(props) {
   const game = useContext(GameContext);
@@ -37,11 +38,13 @@ function BoardTile(props) {
       break;
   }
 
+  const helper = moveHelper(game, x, y);
+
   return (
     <button
       id={props.id}
       className={classNames(
-        "m-0 h-16 w-16 border border-gray-300 md:h-24 md:w-24",
+        "relative m-0 h-16 w-16 border border-gray-300 md:h-24 md:w-24",
         {
           "bg-amber-400 hover:bg-orange-400": highlight,
           "bg-slate-200 hover:bg-slate-300": !highlight,
@@ -78,7 +81,7 @@ function BoardTile(props) {
               />
             )}
           </div>
-          {props.moveHelper}
+          {helper}
         </>
       )}
     </button>

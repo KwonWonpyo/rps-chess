@@ -30,15 +30,38 @@ function PlayGame() {
     message = "상대방의 심리를 읽어 승리하세요!";
   }
 
+  const handleMove = (x, y) => {
+    const field = game.field;
+
+    // click highlighted pawn --> hide helper
+    if (game.selectedPawn === field[x][y]) {
+      game.selectPawn(undefined);
+      return;
+    }
+
+    // click empty square --> hide helper
+    if (field[x][y] === undefined) {
+      game.selectPawn(undefined);
+      return;
+    }
+
+    // click opponent's pawn --> do nothing
+    if (game.xIsNext === false && field[x][y].team === "SCISSORS") return;
+    else if (game.xIsNext === true && field[x][y].team === "PAPER") return;
+
+    // otherwise, highlight this pawn
+    game.selectPawn(field[x][y]);
+  };
+
   return (
     <>
       <StageTitle title={title} />
       <GuideMessage message={message} />
-      <Board field={field} onClick={() => {}} />
-      <div className="mb-1 animate-pulse font-mono text-orange-200">
+      <Board field={field} onClick={handleMove} />
+      <div className="m-3 h-12 animate-pulse font-mono text-orange-200">
         {game.xIsNext
-          ? "Player2가 움직일 차례입니다."
-          : "Player1이 움직일 차례입니다."}
+          ? "가위팀이 움직일 차례입니다."
+          : "보자기팀이 움직일 차례입니다."}
       </div>
       <BackToMain />
     </>

@@ -1,4 +1,4 @@
-import { action, makeObservable, observable } from 'mobx';
+import { action, makeObservable, observable } from "mobx";
 
 class PawnBase {
   constructor(value, isOpen, team) {
@@ -11,6 +11,7 @@ class PawnBase {
       value: observable,
       isOpen: observable,
       move: observable,
+      changeValue: action,
       setOpen: action,
       toggleMove: action,
     });
@@ -22,6 +23,10 @@ class PawnBase {
 
   toggleMove() {
     this.move = !this.move;
+  }
+
+  changeValue(value) {
+    this.value = value;
   }
 }
 

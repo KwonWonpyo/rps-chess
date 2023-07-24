@@ -35,7 +35,7 @@ function SetupDuoPlay() {
     if (game.stage === "SETUP_SCISSORS") {
       if (!(x === 3 || x === 4)) return;
       if (field[x][y].value === "SCISSORS") {
-        field[x][y].value = "ROCK";
+        field[x][y].changeValue("ROCK");
         game.updateField(field);
         game.scoreBoard.teamScissors.scissors -= 1;
       } else if (field[x][y].value === "ROCK") {
@@ -43,14 +43,14 @@ function SetupDuoPlay() {
           alert("가위는 최대 2개까지 배치할 수 있습니다");
           return;
         }
-        field[x][y].value = "SCISSORS";
+        field[x][y].changeValue("SCISSORS");
         game.updateField(field);
         game.scoreBoard.teamScissors.scissors += 1;
       }
     } else if (game.stage === "SETUP_PAPER") {
       if (!(x === 0 || x === 1)) return;
       if (field[x][y]?.value === "PAPER") {
-        field[x][y].value = "ROCK";
+        field[x][y].changeValue("ROCK");
         game.updateField(field);
         game.scoreBoard.teamPapers.papers -= 1;
       } else if (field[x][y]?.value === "ROCK") {
@@ -58,7 +58,7 @@ function SetupDuoPlay() {
           alert("보자기는 최대 2개만 배치할 수 있습니다.");
           return;
         }
-        field[x][y].value = "PAPER";
+        field[x][y].changeValue("PAPER");
         game.updateField(field);
         game.scoreBoard.teamPapers.papers += 1;
       }
@@ -77,7 +77,7 @@ function SetupDuoPlay() {
           pawn.setOpen(false);
         });
         game.mode = "DUO_PLAY";
-        game.stage = "PLAY";
+        game.changeStage("PLAY");
         game.highlights = [];
         navigate("../game");
       }
@@ -100,12 +100,12 @@ function SetupDuoPlay() {
           pawn.setOpen(true);
           game.highlights.push({ x: 4, y: index });
         });
-        game.stage = "SETUP_SCISSORS";
+        game.changeStage("SETUP_SCISSORS");
       }
     }
   };
 
-  const title = game.stage === "SETUP_PAPER" ? "Player1 배치" : "Player2 배치";
+  const title = game.stage === "SETUP_PAPER" ? "보자기팀 배치" : "가위팀 배치";
   const message = (
     <span>
       노란색 칸을 선택하여 {pawnType}를 {pawnNumber}개 배치해주세요

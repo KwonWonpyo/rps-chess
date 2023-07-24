@@ -36,7 +36,7 @@ function SetupSinglePlay() {
 
     if (game.stage === "SETUP_SCISSORS") {
       if (field[x][y].value === "SCISSORS") {
-        field[x][y].value = "ROCK";
+        field[x][y].changeValue("ROCK");
         game.updateField(field);
         game.scoreBoard.teamScissors.scissors -= 1;
       } else if (field[x][y].value === "ROCK") {
@@ -44,13 +44,13 @@ function SetupSinglePlay() {
           alert("가위는 최대 2개까지 배치할 수 있습니다");
           return;
         }
-        field[x][y].value = "SCISSORS";
+        field[x][y].changeValue("SCISSORS");
         game.updateField(field);
         game.scoreBoard.teamScissors.scissors += 1;
       }
     } else if (game.stage === "SETUP_PAPER") {
       if (field[x][y]?.value === "PAPER") {
-        field[x][y].value = "ROCK";
+        field[x][y].changeValue("ROCK");
         game.updateField(field);
         game.scoreBoard.teamPapers.papers -= 1;
       } else if (field[x][y]?.value === "ROCK") {
@@ -58,7 +58,7 @@ function SetupSinglePlay() {
           alert("보자기는 최대 2개만 배치할 수 있습니다.");
           return;
         }
-        field[x][y].value = "PAPER";
+        field[x][y].changeValue("PAPER");
         game.updateField(field);
         game.scoreBoard.teamPapers.papers += 1;
       }
@@ -78,12 +78,12 @@ function SetupSinglePlay() {
     const y1 = Math.floor(Math.random() * 4.9);
     let x2 = Math.floor(Math.random() * 1.9);
     let y2 = Math.floor(Math.random() * 4.9);
-    game.field[x1][y1].value = team;
+    game.field[x1][y1].changeValue(team);
     while (x1 === x2 && y1 === y2) {
       x2 = Math.floor(Math.random() * 1.9);
       y2 = Math.floor(Math.random() * 4.9);
     }
-    game.field[x2][y2].value = team;
+    game.field[x2][y2].changeValue(team);
   };
 
   const handleReady = () => {
