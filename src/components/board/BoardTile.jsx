@@ -46,7 +46,7 @@ function BoardTile(props) {
       className={classNames(
         "relative m-0 h-16 w-16 border border-gray-300 md:h-24 md:w-24",
         {
-          "bg-amber-400 hover:bg-orange-400": highlight,
+          "bg-yellow-200 hover:bg-orange-200": highlight,
           "bg-slate-200 hover:bg-slate-300": !highlight,
         }
       )}

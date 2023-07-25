@@ -77,8 +77,9 @@ function SetupDuoPlay() {
           pawn.setOpen(false);
         });
         game.mode = "DUO_PLAY";
-        game.changeStage("PLAY");
         game.highlights = [];
+        game.xIsNext = false;
+        game.changeStage("PLAY");
         navigate("../game");
       }
     } else if (game.stage === "SETUP_PAPER") {

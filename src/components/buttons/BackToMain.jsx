@@ -1,23 +1,34 @@
 import { Link, Outlet } from "react-router-dom";
 
-function BackToMain() {
+function BackToMain({ openDialog }) {
+  if (openDialog) {
+    return (
+      <>
+        <Link
+          className="m-1 text-lg font-bold text-cyan-400 hover:text-green-300"
+          to={"./backToMain"}
+        >
+          메인화면으로 돌아가기
+        </Link>
+        <Outlet />
+      </>
+    );
+  }
+
   return (
-    <>
-      <Link
-        className="m-1 text-lg font-bold text-cyan-400 hover:text-green-300"
-        to={"./backToMain"}
-      >
-        메인화면으로 돌아가기
-      </Link>
-      <Outlet />
-    </>
+    <Link
+      className="m-1 text-lg font-bold text-cyan-400 hover:text-green-300"
+      to={"/main"}
+    >
+      메인화면으로 돌아가기
+    </Link>
   );
 }
 
 function AlertModal() {
   return (
     <div
-      class="relative z-10"
+      class="relative z-30"
       aria-labelledby="modal-title"
       role="dialog"
       aria-modal="true"

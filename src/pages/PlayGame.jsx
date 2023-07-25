@@ -1,9 +1,12 @@
+import { observer } from "mobx-react-lite";
 import { useContext } from "react";
-import Board from "../components/board/Board";
 import { GameContext } from "../store/Context";
+import Board from "../components/board/Board";
 import StageTitle from "../components/panel/StageTitle";
 import GuideMessage from "../components/panel/GuideMessage";
 import BackToMain from "../components/buttons/BackToMain";
+import GameResult from "../components/panel/GameResult";
+import GuideMessage2 from "../components/panel/GuideMessage2";
 
 function PlayGame() {
   const game = useContext(GameContext);
@@ -31,6 +34,7 @@ function PlayGame() {
   }
 
   const handleMove = (x, y) => {
+    if (game.stage !== "PLAY") return;
     const field = game.field;
 
     // click highlighted pawn --> hide helper
@@ -58,14 +62,11 @@ function PlayGame() {
       <StageTitle title={title} />
       <GuideMessage message={message} />
       <Board field={field} onClick={handleMove} />
-      <div className="m-3 h-12 animate-pulse font-mono text-orange-200">
-        {game.xIsNext
-          ? "가위팀이 움직일 차례입니다."
-          : "보자기팀이 움직일 차례입니다."}
-      </div>
+      <GuideMessage2 game={game} turn={game.xIsNext} />
       <BackToMain />
+      <GameResult game={game} stage={game.stage} />
     </>
   );
 }
 
-export default PlayGame;
+export default observer(PlayGame);

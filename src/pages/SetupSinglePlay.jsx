@@ -98,9 +98,10 @@ function SetupSinglePlay() {
           pawn.setOpen(false);
         });
         game.mode = "SINGLE_PLAY";
-        game.stage = "PLAY";
         game.highlights = [];
         placeAIOpponent("PAPER");
+        game.xIsNext = false;
+        game.changeStage("PLAY");
         navigate("../game");
       }
     } else if (game.stage === "SETUP_PAPER") {
@@ -114,9 +115,10 @@ function SetupSinglePlay() {
           pawn.setOpen(false);
         });
         game.mode = "SINGLE_PLAY";
-        game.stage = "PLAY";
         game.highlights = [];
         placeAIOpponent("SCISSORS");
+        game.xIsNext = false;
+        game.changeStage("PLAY");
         navigate("../game");
       }
     }

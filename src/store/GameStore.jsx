@@ -36,6 +36,7 @@ class GameStore {
       initField: action,
       updateField: action,
       xIsNext: observable,
+      toNext: action,
       scoreBoard: observable,
       updateScore: action,
       stage: observable,
@@ -54,6 +55,21 @@ class GameStore {
 
   updateField(field) {
     this.field = field;
+  }
+
+  printField() {
+    console.log("----- Print Game Field -----");
+    this.field.forEach((row) => {
+      const line = [];
+      row.forEach((col) => {
+        line.push("[" + col.value + "]");
+      });
+      console.log(line);
+    });
+  }
+
+  toNext() {
+    this.xIsNext = !this.xIsNext;
   }
 
   updateScore() {
@@ -75,8 +91,7 @@ class GameStore {
           this.scoreBoard.teamPapers.papers++;
         else if (element?.value === "ROCK") {
           if (element.team === "SCISSORS") this.scoreBoard.teamScissors.rocks++;
-          else if (element.team === "PAPER")
-            this.scoreBoard.teamScissors.rocks++;
+          else if (element.team === "PAPER") this.scoreBoard.teamPapers.rocks++;
         }
       });
     });

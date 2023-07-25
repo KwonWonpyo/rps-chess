@@ -28,26 +28,35 @@ export function MovePawn(game, x, y, targetX, targetY) {
     /* move to empty square */
     game.field[targetX][targetY] = game.field[x][y];
     game.field[x][y] = undefined;
-    game.xIsNext = !game.xIsNext;
+    game.toNext();
     game.updateField(game.field);
   } else {
     /* open both and fight */
     // open both (animation)
     game.field[x][y].setOpen(true);
     game.field[targetX][targetY].setOpen(true);
-    game.xIsNext = !game.xIsNext;
+    game.toNext();
     game.updateField(game.field);
 
     // fight
-    sleep(2000).then(() => {
-      game.field[targetX][targetY] = fight(
-        game.field[x][y],
-        game.field[targetX][targetY]
-      );
-      game.field[x][y] = undefined;
-      game.updateNumbers();
-      game.updateField(game.field);
-    });
+    sleep(2000)
+      .then(() => {
+        game.field[targetX][targetY] = fight(
+          game.field[x][y],
+          game.field[targetX][targetY]
+        );
+        game.field[x][y] = undefined;
+        game.updateScore();
+        game.updateField(game.field);
+      })
+      .then(() => {
+        // check the winner
+        if (game.scoreBoard.teamScissors.scissors === 0) {
+          game.changeStage("RESULT");
+        } else if (game.scoreBoard.teamPapers.papers === 1) {
+          game.changeStage("RESULT");
+        }
+      });
   }
 }
 
@@ -64,6 +73,8 @@ export function canGo(game, pawn, x, y) {
 }
 
 export function moveHelper(game, x, y) {
+  if (game.stage !== "PLAY") return [];
+
   const thisPawn = game.field[x][y];
   if (game.selectedPawn !== thisPawn) return;
 
@@ -73,7 +84,7 @@ export function moveHelper(game, x, y) {
     canGo(game, thisPawn, x - 1, y - 1) &&
       canGoList.push(
         <div
-          className="absolute -left-16 -top-16 m-0 h-16 w-16 border border-gray-300 bg-cyan-500 opacity-30 md:-left-24 md:-top-24 md:h-24 md:w-24"
+          className="absolute -left-16 -top-16 z-20 m-0 h-16 w-16 border border-gray-300 bg-cyan-500 opacity-30 md:-left-24 md:-top-24 md:h-24 md:w-24"
           onClick={() => {
             MovePawn(game, x, y, x - 1, y - 1);
           }}
@@ -84,7 +95,7 @@ export function moveHelper(game, x, y) {
     canGo(game, thisPawn, x - 1, y) &&
       canGoList.push(
         <div
-          className="absolute -top-16 m-0 h-16 w-16 border border-gray-300 bg-cyan-500 opacity-30 md:-top-24 md:h-24 md:w-24"
+          className="absolute -top-16 z-20 m-0 h-16 w-16 border border-gray-300 bg-cyan-500 opacity-30 md:-top-24 md:h-24 md:w-24"
           onClick={() => {
             MovePawn(game, x, y, x - 1, y);
           }}
@@ -95,7 +106,7 @@ export function moveHelper(game, x, y) {
     canGo(game, thisPawn, x - 1, y + 1) &&
       canGoList.push(
         <div
-          className="absolute -top-16 left-16 m-0 h-16 w-16 border border-gray-300 bg-cyan-500 opacity-30 md:-top-24 md:left-24 md:h-24 md:w-24"
+          className="absolute -top-16 left-16 z-20 m-0 h-16 w-16 border border-gray-300 bg-cyan-500 opacity-30 md:-top-24 md:left-24 md:h-24 md:w-24"
           onClick={() => {
             MovePawn(game, x, y, x - 1, y + 1);
           }}
@@ -106,7 +117,7 @@ export function moveHelper(game, x, y) {
     canGo(game, thisPawn, x, y - 1) &&
       canGoList.push(
         <div
-          className="absolute -left-16 m-0 h-16 w-16 border border-gray-300 bg-violet-500 opacity-80 md:-left-24 md:h-24 md:w-24"
+          className="absolute -left-16 top-0 z-20 m-0 h-16 w-16 border border-gray-300 bg-cyan-500 opacity-30 md:-left-24 md:h-24 md:w-24"
           onClick={() => {
             MovePawn(game, x, y, x, y - 1);
           }}
@@ -117,7 +128,7 @@ export function moveHelper(game, x, y) {
     canGo(game, thisPawn, x, y + 1) &&
       canGoList.push(
         <div
-          className="absolute top-16 m-0 h-16 w-16 border border-gray-300 bg-amber-500 opacity-80 md:top-24 md:h-24 md:w-24"
+          className="absolute left-16 top-0 z-20 m-0 h-16 w-16 border border-gray-300 bg-cyan-500 opacity-30 md:left-24 md:h-24 md:w-24"
           onClick={() => {
             MovePawn(game, x, y, x, y + 1);
           }}
@@ -128,7 +139,7 @@ export function moveHelper(game, x, y) {
     canGo(game, thisPawn, x + 1, y - 1) &&
       canGoList.push(
         <div
-          className="absolute -left-16 top-16 m-0 h-16 w-16 border border-gray-300 bg-cyan-500 opacity-30 md:-left-24 md:top-24 md:h-24 md:w-24"
+          className="absolute -left-16 top-16 z-20 m-0 h-16 w-16 border border-gray-300 bg-cyan-500 opacity-30 md:-left-24 md:top-24 md:h-24 md:w-24"
           onClick={() => {
             MovePawn(game, x, y, x + 1, y - 1);
           }}
@@ -139,7 +150,7 @@ export function moveHelper(game, x, y) {
     canGo(game, thisPawn, x + 1, y) &&
       canGoList.push(
         <div
-          className="absolute top-16 m-0 h-16 w-16 border border-gray-300 bg-cyan-500 opacity-30 md:top-24 md:h-24 md:w-24"
+          className="absolute top-16 z-20 m-0 h-16 w-16 border border-gray-300 bg-cyan-500 opacity-30 md:top-24 md:h-24 md:w-24"
           onClick={() => {
             MovePawn(game, x, y, x + 1, y);
           }}
@@ -150,7 +161,7 @@ export function moveHelper(game, x, y) {
     canGo(game, thisPawn, x + 1, y + 1) &&
       canGoList.push(
         <div
-          className="absolute left-16 top-16 z-10 m-0 h-16 w-16 border border-gray-300 bg-cyan-500 opacity-30 md:left-24 md:top-24 md:h-24 md:w-24"
+          className="absolute left-16 top-16 z-20 m-0 h-16 w-16 border border-gray-300 bg-cyan-500 opacity-30 md:left-24 md:top-24 md:h-24 md:w-24"
           onClick={() => {
             MovePawn(game, x, y, x + 1, y + 1);
           }}
