@@ -41,7 +41,7 @@ function GameResult({ game }) {
       <div class="fixed inset-0 bg-gray-500 bg-opacity-30 transition-opacity"></div>
       <div class="fixed inset-0 z-10 overflow-y-auto">
         <div class="flex min-h-full flex-col items-center justify-center p-4 text-center sm:p-0">
-          <div class="relative w-full overflow-hidden rounded-sm bg-gradient-to-t from-[#ffffffbb] via-[#ffffffee] to-[#ffffffbb] p-2 text-center shadow-lg sm:my-8">
+          <div class="relative w-full overflow-hidden rounded-lg bg-gradient-to-t from-[#ffffffbb] via-[#ffffffee] to-[#ffffffbb] p-2 text-center shadow-lg sm:my-8">
             <p class="p-2 font-mono text-5xl font-extrabold text-rose-600">
               {result}
             </p>
