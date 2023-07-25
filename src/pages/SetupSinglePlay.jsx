@@ -101,6 +101,7 @@ function SetupSinglePlay() {
         game.highlights = [];
         placeAIOpponent("PAPER");
         game.xIsNext = false;
+        game.team_single = "SCISSORS";
         game.changeStage("PLAY");
         navigate("../game");
       }
@@ -118,6 +119,7 @@ function SetupSinglePlay() {
         game.highlights = [];
         placeAIOpponent("SCISSORS");
         game.xIsNext = false;
+        game.team_single = "PAPER";
         game.changeStage("PLAY");
         navigate("../game");
       }
