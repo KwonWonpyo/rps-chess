@@ -1,13 +1,10 @@
 import { useContext } from "react";
 import { GameContext } from "../store/Context";
-import { Link } from "react-router-dom";
-import OnePlayer from "../resource/one_player.svg";
-import TwoPlayer from "../resource/two_players_ver2.svg";
+import { Link, Outlet } from "react-router-dom";
 import PawnBase from "../components/pawn/PawnBase";
-import ButtonSquare1 from "../components/buttons/ButtonSquare1";
-import BackToLink from "../components/buttons/BackToLink";
+import ButtonSquare2 from "../components/buttons/ButtonSquare2";
 
-function SelectPlayer() {
+function StartPage() {
   const game = useContext(GameContext);
 
   const initDuoPlay = () => {
@@ -33,24 +30,23 @@ function SelectPlayer() {
 
   return (
     <>
-      <Link to={"../singlePlay"}>
-        <ButtonSquare1
-          text={"1인용 플레이"}
-          svg={OnePlayer}
-          alt={"one player"}
-        />
+      <Link to={"./selectPlayerNumber"}>
+        <ButtonSquare2 text={"게임 시작"} onClick={() => {}} />
       </Link>
-      <Link to={"/setupDuoPlay"}>
-        <ButtonSquare1
-          text={"2인용 플레이"}
-          svg={TwoPlayer}
-          alt={"two players"}
-          onClick={() => initDuoPlay()}
-        />
+      <Link to={"./howToPlay"}>
+        <ButtonSquare2 text={"게임 설명"} onClick={() => {}} />
       </Link>
-      <BackToLink backTo={"../"} />
+      <a
+        className="m-1 text-lg font-bold text-cyan-400 hover:text-green-300"
+        href="https://reactjs.org"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Learn React
+      </a>
+      <Outlet />
     </>
   );
 }
 
-export default SelectPlayer;
+export default StartPage;

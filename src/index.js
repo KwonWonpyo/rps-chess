@@ -19,15 +19,23 @@ import SelectMode from "./pages/SelectMode";
 import PlayGame from "./pages/PlayGame";
 import SetupSinglePlay from "./pages/SetupSinglePlay";
 import SetupDuoPlay from "./pages/SetupDuoPlay";
+import StartPage from "./pages/StartPage";
+import HowToPlay from "./components/panel/HowToPlay";
 import { AlertModal } from "./components/buttons/BackToMain";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<App />} errorElement={<ErrorPage />}>
-        <Route path="/main" element={<Main />}>
-          <Route path="/main" element={<SelectPlayer />} />
-          <Route path="/main/singlePlay" element={<SelectMode />} />
+        <Route path="/rps-chess" element={<Main />}>
+          <Route path="/rps-chess" element={<StartPage />}>
+            <Route path="/rps-chess/howToPlay" element={<HowToPlay />} />
+          </Route>
+          <Route
+            path="/rps-chess/selectPlayerNumber"
+            element={<SelectPlayer />}
+          />
+          <Route path="/rps-chess/singlePlay" element={<SelectMode />} />
         </Route>
         <Route path="/setupSinglePlay" element={<SetupSinglePlay />} />
         <Route path="/setupDuoPlay" element={<SetupDuoPlay />} />

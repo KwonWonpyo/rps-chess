@@ -13,7 +13,7 @@ export default function ErrorPage() {
       </p>
       <Link
         className="m-5 text-2xl font-bold text-green-400 hover:bg-indigo-400 hover:text-green-300"
-        to={"/main"}
+        to={"/rps-chess"}
       >
         Go back to main
       </Link>

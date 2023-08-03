@@ -15,7 +15,7 @@ function PlayGame() {
   let title;
   switch (game.mode) {
     case "SINGLE_PLAY":
-      title = "AI 대전";
+      title = "AI 대전 (AI 미구현)";
       break;
     case "DUO_PLAY":
       title = "오프라인 대전";
@@ -63,7 +63,7 @@ function PlayGame() {
       <GuideMessage message={message} />
       <Board field={field} onClick={handleMove} />
       <GuideMessage2 game={game} turn={game.xIsNext} />
-      <BackToMain />
+      <BackToMain openDialog={game.stage === "PLAY"} />
       <GameResult game={game} stage={game.stage} />
     </>
   );

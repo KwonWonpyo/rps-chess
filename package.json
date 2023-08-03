@@ -1,6 +1,6 @@
 {
   "name": "rps-chess",
-  "homepage": "https://kwonwonpyo.github.io/rps-chess/main",
+  "homepage": "https://kwonwonpyo.github.io/rps-chess/",
   "version": "0.2.0",
   "private": true,
   "dependencies": {

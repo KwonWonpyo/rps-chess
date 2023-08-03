@@ -137,7 +137,10 @@ function SetupSinglePlay() {
       <GuideMessage message={message} />
       <Board field={game.field} onClick={handleSetupSinglePlay} />
       <ButtonSimple text={"준비 완료"} onClick={handleReady} />
-      <BackToLink backTo={"/main/singlePlay"} />
+      <BackToLink
+        backTo={"/rps-chess/singlePlay"}
+        text={"팀 선택으로 돌아가기"}
+      />
     </>
   );
 }

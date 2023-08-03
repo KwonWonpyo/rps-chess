@@ -118,7 +118,7 @@ function SetupDuoPlay() {
       <GuideMessage message={message} />
       <Board field={game.field} onClick={handleSetupDuoPlay} />
       <ButtonSimple text={"준비 완료"} onClick={handleReady} />
-      <BackToLink backTo={"/main"} />
+      <BackToLink backTo={"/rps-chess/selectPlayerNumber"} />
     </>
   );
 }
