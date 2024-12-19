@@ -74,14 +74,14 @@ function SetupSinglePlay() {
     }
 
     // 가위 또는 보자기를 랜덤 배치
-    const x1 = Math.floor(Math.random() * 1.9);
-    const y1 = Math.floor(Math.random() * 4.9);
-    let x2 = Math.floor(Math.random() * 1.9);
-    let y2 = Math.floor(Math.random() * 4.9);
+    const x1 = Math.floor(Math.random() * 2); // 0~1
+    const y1 = Math.floor(Math.random() * 5); // 0~4
+    let x2 = Math.floor(Math.random() * 2);
+    let y2 = Math.floor(Math.random() * 5);
     game.field[x1][y1].changeValue(team);
     while (x1 === x2 && y1 === y2) {
-      x2 = Math.floor(Math.random() * 1.9);
-      y2 = Math.floor(Math.random() * 4.9);
+      x2 = Math.floor(Math.random() * 2);
+      y2 = Math.floor(Math.random() * 5);
     }
     game.field[x2][y2].changeValue(team);
   };
@@ -99,9 +99,11 @@ function SetupSinglePlay() {
         });
         game.mode = "SINGLE_PLAY";
         game.highlights = [];
-        placeAIOpponent("PAPER");
         game.xIsNext = false;
         game.team_single = "SCISSORS";
+        game.team_AI = "PAPER";
+        placeAIOpponent("PAPER");
+        game.updateScore();
         game.changeStage("PLAY");
         navigate("../game");
       }
@@ -117,9 +119,11 @@ function SetupSinglePlay() {
         });
         game.mode = "SINGLE_PLAY";
         game.highlights = [];
-        placeAIOpponent("SCISSORS");
         game.xIsNext = false;
         game.team_single = "PAPER";
+        game.team_AI = "SCISSORS";
+        placeAIOpponent("SCISSORS");
+        game.updateScore();
         game.changeStage("PLAY");
         navigate("../game");
       }

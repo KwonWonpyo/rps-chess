@@ -1,8 +1,11 @@
 import { action, makeObservable, observable } from "mobx";
+import { executeAIMove } from "../rules/AISimple";
+import { MovePawn } from "../rules/Moves";
 
 class GameStore {
   mode;
   team_single;
+  team_AI;
   row = 5;
   col = 5;
   field;
@@ -32,7 +35,7 @@ class GameStore {
     this.stage = "";
 
     makeObservable(this, {
-      field: observable,
+      field: observable.shallow,
       initField: action,
       updateField: action,
       xIsNext: observable,
@@ -43,6 +46,7 @@ class GameStore {
       changeStage: action,
       selectedPawn: observable,
       selectPawn: action,
+      aiTurn: action,
     });
   }
 
@@ -95,6 +99,13 @@ class GameStore {
         }
       });
     });
+
+    // check the winner
+    if (this.scoreBoard.teamScissors.scissors === 0) {
+      this.changeStage("RESULT");
+    } else if (this.scoreBoard.teamPapers.papers === 1) {
+      this.changeStage("RESULT");
+    }
   }
 
   changeStage(nextStage) {
@@ -103,6 +114,21 @@ class GameStore {
 
   selectPawn(pawn) {
     this.selectedPawn = pawn;
+  }
+
+  aiTurn() {
+    const aiMove = executeAIMove(this.field, this.team_AI);
+    if (aiMove) {
+      const { position, move } = aiMove;
+      const [x, y] = position;
+      const [targetX, targetY] = move;
+
+      // MovePawn 호출로 이동/공격 처리
+      MovePawn(this, x, y, targetX, targetY);
+    } else {
+      // 움직일 수 없으면 에러 반환
+      alert("AI가 움직일 수 있는 말이 없습니다.");
+    }
   }
 }
 

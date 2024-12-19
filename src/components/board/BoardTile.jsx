@@ -50,6 +50,7 @@ function BoardTile(props) {
           "bg-slate-200 hover:bg-slate-300": !highlight,
         }
       )}
+      cell-position={`${x}-${y}`}
       onClick={props.onClick}
     >
       {pawn && (
@@ -63,6 +64,7 @@ function BoardTile(props) {
               teamColor,
               pawnClass
             )}
+            piece-position={`${x}-${y}`}
           >
             {pawn?.isOpen === false && (
               <div

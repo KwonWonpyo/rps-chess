@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { GameContext } from "../store/Context";
 import Board from "../components/board/Board";
 import StageTitle from "../components/panel/StageTitle";
@@ -12,10 +12,25 @@ function PlayGame() {
   const game = useContext(GameContext);
   const field = game.field;
 
+  useEffect(() => {
+    if (game.mode === "SINGLE_PLAY" && game.stage === "PLAY") {
+      if (
+        (game.team_AI === "PAPER" && !game.xIsNext) ||
+        (game.team_AI === "SCISSORS" && game.xIsNext)
+      ) {
+        // AI 턴 실행
+        const timer = setTimeout(() => {
+          game.aiTurn();
+        }, 1500); // AI 행동에 약간의 지연 추가
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [game.mode, game.xIsNext, game]);
+
   let title;
   switch (game.mode) {
     case "SINGLE_PLAY":
-      title = "AI 대전 (AI 미구현)";
+      title = "AI를 이겨라";
       break;
     case "DUO_PLAY":
       title = "오프라인 대전";

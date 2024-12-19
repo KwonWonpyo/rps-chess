@@ -1,62 +1,53 @@
 import sleep from "../utils/sleep";
+import {
+  triggerMoveAnimation,
+  triggerFightAnimation,
+} from "../utils/animation";
 
 export function fight(attacker, defender) {
-  if (attacker.value === "ROCK") {
-    if (defender.value === "SCISSORS") return attacker;
-    else if (defender.value === "ROCK") return undefined;
-    else if (defender.value === "PAPER") return defender;
-  } else if (attacker.value === "SCISSORS") {
-    if (defender.value === "SCISSORS") return undefined;
-    else if (defender.value === "ROCK") return defender;
-    else if (defender.value === "PAPER") return attacker;
-  } else if (attacker.value === "PAPER") {
-    if (defender.value === "SCISSORS") return defender;
-    else if (defender.value === "ROCK") return attacker;
-    else if (defender.value === "PAPER") return undefined;
+  const canWin = {
+    ROCK: "SCISSORS",
+    SCISSORS: "PAPER",
+    PAPER: "ROCK",
+  };
+
+  if (canWin[attacker.value] === defender.value) {
+    return attacker; // 공격자가 승리
+  } else if (canWin[defender.value] === attacker.value) {
+    return defender; // 수비자가 승리
+  } else {
+    return undefined; // 무승부
   }
 }
 
-export function MovePawn(game, x, y, targetX, targetY) {
+export async function MovePawn(game, x, y, targetX, targetY) {
   if (game.field[x][y] === undefined) return false;
+  const field = game.field.slice();
 
   // change highlight squares
   game.highlights = [];
   game.highlights.push({ x: x, y: y });
   game.highlights.push({ x: targetX, y: targetY });
 
-  if (game.field[targetX][targetY] === undefined) {
+  if (field[targetX][targetY] === undefined) {
     /* move to empty square */
-    game.field[targetX][targetY] = game.field[x][y];
-    game.field[x][y] = undefined;
+    await triggerMoveAnimation(x, y, targetX, targetY);
+    field[targetX][targetY] = field[x][y];
+    field[x][y] = undefined;
+    game.updateField(field);
     game.toNext();
-    game.updateField(game.field);
   } else {
     /* open both and fight */
-    // open both (animation)
-    game.field[x][y].setOpen(true);
-    game.field[targetX][targetY].setOpen(true);
-    game.toNext();
-    game.updateField(game.field);
-
-    // fight
-    sleep(2000)
-      .then(() => {
-        game.field[targetX][targetY] = fight(
-          game.field[x][y],
-          game.field[targetX][targetY]
-        );
-        game.field[x][y] = undefined;
-        game.updateScore();
-        game.updateField(game.field);
-      })
-      .then(() => {
-        // check the winner
-        if (game.scoreBoard.teamScissors.scissors === 0) {
-          game.changeStage("RESULT");
-        } else if (game.scoreBoard.teamPapers.papers === 1) {
-          game.changeStage("RESULT");
-        }
-      });
+    field[x][y].setOpen(true);
+    field[targetX][targetY].setOpen(true);
+    await triggerFightAnimation(x, y, targetX, targetY);
+    sleep(1500).then(() => {
+      field[targetX][targetY] = fight(field[x][y], field[targetX][targetY]);
+      field[x][y] = undefined;
+      game.updateField(field);
+      game.updateScore();
+      game.toNext();
+    });
   }
 }
 
