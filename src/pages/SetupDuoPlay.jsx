@@ -79,6 +79,7 @@ function SetupDuoPlay() {
         game.mode = "DUO_PLAY";
         game.highlights = [];
         game.xIsNext = false;
+        game.updateScore();
         game.changeStage("PLAY");
         navigate("../game");
       }

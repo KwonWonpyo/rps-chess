@@ -17,7 +17,7 @@ function Main() {
         <Outlet />
       </div>
       <div className="fixed bottom-0 text-xs text-gray-200">
-        &copy;copyright 2023, 권원표
+        &copy;copyright 2024, 권원표
       </div>
     </>
   );
